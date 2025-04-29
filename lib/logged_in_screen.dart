@@ -8,21 +8,21 @@ class LoggedInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade50, // Cor de fundo suave
+      backgroundColor: Colors.green.shade50,
       appBar: AppBar(
         title: const Text('Usuário Logado'),
-        backgroundColor: Colors.green, // Cor da AppBar
-        elevation: 0, // Removendo a sombra da AppBar
+        backgroundColor: Colors.green,
+        elevation: 0,
       ),
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(32),
           decoration: BoxDecoration(
-            color: Colors.white, // Cor de fundo da caixa
-            borderRadius: BorderRadius.circular(12), // Bordas arredondadas
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1), // Sombra leve
+                color: Colors.black.withOpacity(0.1),
                 spreadRadius: 2,
                 blurRadius: 8,
               ),
@@ -34,7 +34,7 @@ class LoggedInScreen extends StatelessWidget {
               const Icon(
                 Icons.check_circle_outline,
                 color: Colors.green,
-                size: 80, // Ícone grande e verde para indicar sucesso
+                size: 80,
               ),
               const SizedBox(height: 20),
               Text(
@@ -42,30 +42,23 @@ class LoggedInScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color:
-                      Colors
-                          .green
-                          .shade700, // Cor verde mais forte para o texto
+                  color: Colors.green.shade700,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Aqui você pode adicionar lógica para fazer logout ou navegar para outra tela
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, // Cor de fundo do botão
+                  backgroundColor: Colors.green,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      8,
-                    ), // Bordas arredondadas no botão
+                    borderRadius: BorderRadius.circular(8),
                   ),
                   padding: const EdgeInsets.symmetric(
                     vertical: 12,
                     horizontal: 40,
                   ),
-                  elevation: 3, // Leve sombra para o botão
+                  elevation: 3,
                 ),
                 child: const Text(
                   'Continuar',

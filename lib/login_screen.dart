@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      'Login',
+                      'Login Ensala+',
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
@@ -157,14 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         : ElevatedButton(
                           onPressed: _login,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Colors.green, // Cor de fundo do botão
+                            backgroundColor: Colors.green,
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.zero, // Sem bordas arredondadas
+                              borderRadius: BorderRadius.zero,
                             ),
                             padding: const EdgeInsets.symmetric(vertical: 14),
-                            elevation: 3, // Leve sombra para o botão
+                            elevation: 3,
                           ),
                           child: const Text(
                             'Entrar',
