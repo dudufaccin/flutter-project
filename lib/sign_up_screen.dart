@@ -1,58 +1,57 @@
 import 'package:flutter/material.dart';
 import 'supabase_config.dart';
-import 'logged_in_screen.dart';
-import 'sign_up_screen.dart'; // nova importação
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
+  String? _message;
   bool _isLoading = false;
-  String? _errorMessage;
 
-  Future<void> _login() async {
+  Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {
       _isLoading = true;
-      _errorMessage = null;
+      _message = null;
     });
 
     try {
-      final response = await SupabaseConfig.client.auth.signInWithPassword(
+      final response = await SupabaseConfig.client.auth.signUp(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
-      if (response.user == null) {
+      if (response.user != null) {
         setState(() {
-          _errorMessage = 'Login falhou. Verifique email e senha.';
+          _message = 'Cadastro realizado com sucesso!';
         });
       } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => LoggedInScreen(userEmail: response.user!.email!),
-          ),
-        );
+        setState(() {
+          _message = 'Não foi possível cadastrar.';
+        });
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'Erro: ${e.toString()}';
+        _message = 'Erro: ${e.toString()}';
       });
     } finally {
       setState(() {
         _isLoading = false;
       });
     }
+  }
+
+  void _goBack() {
+    Navigator.pop(context);
   }
 
   @override
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      'Login Ensala+',
+                      'Cadastro Ensala+',
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.bold,
@@ -147,12 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   : 'Mínimo 6 caracteres',
                     ),
                     const SizedBox(height: 24),
-                    if (_errorMessage != null)
+                    if (_message != null)
                       Text(
-                        _errorMessage!,
+                        _message!,
                         style: TextStyle(
                           color:
-                              _errorMessage!.contains('sucesso')
+                              _message!.contains('sucesso')
                                   ? Colors.green
                                   : Colors.red,
                           fontWeight: FontWeight.w600,
@@ -161,11 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 16),
                     _isLoading
                         ? const CircularProgressIndicator()
-                        : Row(
+                        : Column(
                           children: [
-                            Expanded(
+                            SizedBox(
+                              width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: _login,
+                                onPressed: _register,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
                                   shape: RoundedRectangleBorder(
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   elevation: 3,
                                 ),
                                 child: const Text(
-                                  'Entrar',
+                                  'Cadastrar',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
@@ -185,17 +185,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 12),
-                            Expanded(
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const SignUpScreen(),
-                                    ),
-                                  );
-                                },
+                                onPressed: _goBack,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
                                   side: const BorderSide(color: Colors.green),
@@ -208,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   elevation: 2,
                                 ),
                                 child: const Text(
-                                  'Cadastrar',
+                                  'Voltar',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.green,
